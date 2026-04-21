@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+</head>
+<body>
+
+    <h1>To-Do List</h1>
+
+    {% if error %}
+    <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    <h2>Add a New Item</h2>
+    <form action="/submit" method="POST">
+        <label>Task: <input type="text" name="task"></label><br><br>
+        <label>Email: <input type="text" name="email"></label><br><br>
+        <label>Priority:
+            <select name="priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+        </label><br><br>
+        <input type="submit" value="Add To Do Item">
+    </form>
+
+    <h2>Current To-Do Items</h2>
+    <table border="1">
+        <tr>
+            <th>Task</th>
+            <th>Email</th>
+            <th>Priority</th>
+            <th>Action</th>
+        </tr>
+        {% for item in todo_list %}
+        <tr>
+            <td>{{ item.task }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.priority }}</td>
+            <td>
+                <form action="/delete/{{ item.id }}" method="POST">
+                    <input type="submit" value="Delete">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <form action="/clear" method="POST" style="display:inline;">
+        <input type="submit" value="Clear">
+    </form>
+
+    <form action="/save" method="POST" style="display:inline;">
+        <input type="submit" value="Save">
+    </form>
+
+</body>
+</html>
